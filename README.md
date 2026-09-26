@@ -22,7 +22,7 @@ Die Steuerung erhält vorhandene Zeitfenster und übrige Anlagenwerte beim Aktua
 4. Gib die E-Mail-Adresse, das Kennwort des AlphaESS-Kundenportals und die Seriennummer der Anlage ein. Die Anlagen-Seriennummer beginnt üblicherweise mit `ALB`.
 5. Öffne anschließend **Neu konfigurieren** bei der Integration und ergänze die Wallbox-Seriennummer. Sie beginnt mit `ALP`.
 
-Das Kennwort wird nicht protokolliert. Es gehört weder in YAML-Dateien noch in ein Git-Repository.
+Das Kennwort wird nicht protokolliert. 
 
 ## Bedienung
 
