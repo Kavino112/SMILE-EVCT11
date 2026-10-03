@@ -3,11 +3,12 @@
     "step": {
       "user": {
         "title": "AlphaESS Portal verbinden",
-        "description": "Melde dich mit deinem aktuellen AlphaESS-Kundenportalzugang an. Home Assistant baut eine erneuerbare Portalsitzung auf und prüft anschließend die Anlage. Das Kennwort wird nicht protokolliert.",
+        "description": "Melde dich mit deinem aktuellen AlphaESS-Kundenportalzugang an. Die Wallbox-Seriennummer ist optional; wenn sie nicht automatisch erkannt wird, kann sie später über Neu konfigurieren ergänzt werden.",
         "data": {
           "username": "Benutzername oder E-Mail-Adresse",
           "password": "Kennwort",
-          "system_serial": "Anlagen-Seriennummer"
+          "system_serial": "Anlagen-Seriennummer",
+          "wallbox_serial": "Wallbox-Seriennummer (optional)"
         }
       },
       "reconfigure": {
@@ -27,6 +28,17 @@
     },
     "abort": {
       "reconfigure_successful": "Die Wallbox wurde zugeordnet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Aktualisierungsintervall",
+        "description": "Wähle, wie häufig die Wallbox-Daten im AlphaESS-Portal abgefragt werden. Für ältere EVCT11-Wallboxen sind 2 Minuten der empfohlene Standard.",
+        "data": {
+          "update_interval_seconds": "Aktualisierung alle (Sekunden)"
+        }
+      }
     }
   }
 }

@@ -1,4 +1,10 @@
 """Config flow for AlphaESS Portal Bridge."""
+# ---------------------------------------------------------------------------
+# Community-Build fuer https://www.storion4you.de/
+# G2T-Erweiterung fuer SMILE-G3-EVCT11/S: Kavino
+# Basierend auf dem Ausgangsprojekt wfa001/SMILE-EVCT11.
+# Details und Attribution: siehe NOTICE.md im Paket.
+# ---------------------------------------------------------------------------
 from __future__ import annotations
 
 from typing import Any
@@ -6,26 +12,42 @@ from typing import Any
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.core import callback
 
 from .api import AlphaESSPortalApi, AuthenticationError, PortalConnectionError
 from .const import (
     CONF_PASSWORD,
     CONF_SYSTEM_SERIAL,
+    CONF_UPDATE_INTERVAL,
     CONF_USERNAME,
     CONF_WALLBOX_SERIAL,
+    DEFAULT_UPDATE_INTERVAL_SECONDS,
     DOMAIN,
+    UPDATE_INTERVAL_OPTIONS,
 )
 
 
 class AlphaESSPortalBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Set up the bridge through the current AlphaESS portal session API."""
 
-    VERSION = 1
+    VERSION = 2
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry: config_entries.ConfigEntry) -> AlphaESSPortalBridgeOptionsFlow:
+        """Return the editable integration options."""
+        return AlphaESSPortalBridgeOptionsFlow()
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] | None = None
         if user_input is not None:
+            user_input = dict(user_input)
+            user_input[CONF_SYSTEM_SERIAL] = user_input[CONF_SYSTEM_SERIAL].strip().upper()
+            if user_input.get(CONF_WALLBOX_SERIAL):
+                user_input[CONF_WALLBOX_SERIAL] = user_input[CONF_WALLBOX_SERIAL].strip().upper()
+            else:
+                user_input.pop(CONF_WALLBOX_SERIAL, None)
             await self.async_set_unique_id(user_input[CONF_SYSTEM_SERIAL])
             self._abort_if_unique_id_configured()
             api = AlphaESSPortalApi(self.hass, user_input)
@@ -44,10 +66,7 @@ class AlphaESSPortalBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors["base"] = "cannot_connect"
                 else:
                     errors["base"] = "portal_status"
-                    description_placeholders = {
-                        "step": err.step,
-                        "status": str(err.status),
-                    }
+                    description_placeholders = {"step": err.step, "status": str(err.status)}
             else:
                 return self.async_create_entry(
                     title=f"AlphaESS Wallbox {user_input[CONF_SYSTEM_SERIAL]}",
@@ -59,6 +78,7 @@ class AlphaESSPortalBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_USERNAME): str,
                 vol.Required(CONF_PASSWORD): str,
                 vol.Required(CONF_SYSTEM_SERIAL): str,
+                vol.Optional(CONF_WALLBOX_SERIAL): str,
             }
         )
         return self.async_show_form(
@@ -71,7 +91,7 @@ class AlphaESSPortalBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_reconfigure(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
-        """Add the wallbox serial to an existing portal connection."""
+        """Add or replace the wallbox serial on an existing connection."""
         entry = self._get_reconfigure_entry()
         if user_input is not None:
             wallbox_serial = user_input[CONF_WALLBOX_SERIAL].strip().upper()
@@ -85,7 +105,28 @@ class AlphaESSPortalBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="reconfigure",
+            data_schema=vol.Schema({vol.Required(CONF_WALLBOX_SERIAL): str}),
+        )
+
+
+class AlphaESSPortalBridgeOptionsFlow(config_entries.OptionsFlowWithReload):
+    """Configure the portal refresh interval without changing credentials."""
+
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        current_interval = self.config_entry.options.get(
+            CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL_SECONDS
+        )
+        return self.async_show_form(
+            step_id="init",
             data_schema=vol.Schema(
-                {vol.Required(CONF_WALLBOX_SERIAL): str}
+                {
+                    vol.Required(
+                        CONF_UPDATE_INTERVAL,
+                        default=current_interval,
+                    ): vol.In(UPDATE_INTERVAL_OPTIONS),
+                }
             ),
         )
