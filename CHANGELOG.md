@@ -7,7 +7,7 @@
 
 ### Funktionsumfang
 
-- Entwicklungsstand 0.5.2 als öffentliche Beta paketiert.
+- Entwicklungsstand 0.5.2
 - START/STOP bei G2T auf Ladeeinstellung **Manuell** begrenzt – UI und API-Schutz.
 - `WaitingForChargingPile` als **„Warten auf Antwort des E-Autos“** übersetzt.
 - Smart-Mode-Schutz für Zeitsteuerung, OBC-Phasenwahl und Lademodus ergänzt.
@@ -18,7 +18,7 @@
 - Installateursteuerung und Kabel-Selbstverriegelung schreibbar.
 - öffentliche Beta-Dokumentation und bekannte Einschränkungen ergänzt.
 
-## Entwicklungsstände vor der öffentlichen Beta
+## Entwicklungsstände
 
 ### 0.5.11
 - Installateursteuerung und Kabel-Selbstverriegelung als schreibbare Schalter ergänzt und praktisch bestätigt.
