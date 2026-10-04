@@ -28,7 +28,7 @@ Dies ist ein Community-Projekt und keine offizielle AlphaESS-Integration. Die G2
 - Hardware-, Software-, Modell- und Profildiagnose
 - Energie- und Ladeberichtswerte
 
-Der Diagnose-Sensor **Portal-Profil** zeigt das erkannte Profil und das dazugehörige Bild `G1T.png` oder `G2T.png`.
+Der Diagnose-Sensor **Portal-Profil** zeigt das erkannte Profil und das dazugehörige Bild `g1t.png` oder `g2t.png`.
 
 ### G1T
 
@@ -72,16 +72,22 @@ Bei unerwartetem Verhalten zuerst die AlphaESS-App oder das Portal prüfen. Die 
 
 Kurze Übergangszustände der Wallbox können zwischen zwei Abfragen liegen und in Home Assistant unsichtbar bleiben.
 
-## Installation und Update
+## Installation über HACS
 
-1. Den bestehenden Ordner `config/custom_components/alphaess_portal_bridge` sichern.
-2. Den Ordner `custom_components/alphaess_portal_bridge` aus dem Paket nach `config/custom_components/` kopieren und die vorhandenen Dateien ersetzen.
-3. Home Assistant vollständig neu starten.
+1. HACS öffnen und **Integrationen → ⋮ → Benutzerdefinierte Repositories** wählen.
+2. `https://github.com/wfa001/SMILE-EVCT11` als Repository mit Typ **Integration** hinzufügen.
+3. Die **AlphaESS Wallbox Bridge** installieren und Home Assistant neu starten.
 4. Eine bereits eingerichtete Integration nicht löschen. Zugangsdaten und Wallbox-Seriennummer bleiben im vorhandenen Config Entry erhalten.
 5. Auf der Geräteseite unter Diagnose prüfen, welches Portal-Profil (`g1T` oder `g2T`) erkannt wurde.
 
-Bei einer Neuinstallation die Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen** einrichten.
+## Manuelle Installation
 
+1. Den bestehenden Ordner `config/custom_components/alphaess_portal_bridge` sichern.
+2. Die Integrationsdateien aus dem Repository-Root – einschließlich `manifest.json`, `brand/` und `translations/` – nach `config/custom_components/alphaess_portal_bridge/` kopieren und vorhandene Dateien ersetzen.
+3. Home Assistant vollständig neu starten.
+4. Eine bereits eingerichtete Integration nicht löschen. Zugangsdaten und Wallbox-Seriennummer bleiben im vorhandenen Config Entry erhalten.
+
+Bei einer Neuinstallation die Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen** einrichten.
 ## G2T-Portal-Zuordnungen
 
 | Portal-Feld | Bedeutung |
