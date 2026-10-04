@@ -40,6 +40,15 @@ class AlphaESSInstallerControlSwitch(AlphaESSWallboxEntity, SwitchEntity):
     """Allow or deny installer control as exposed by the AlphaESS app."""
 
     _attr_name = "Installateursteuerung erlaubt"
+    @property
+def extra_state_attributes(self) -> dict[str, str]:
+    return {
+        "Hinweis": (
+            "Erlaubt dem verknüpften AlphaESS-Installateur die Fernsteuerung bzw. "
+            "Konfiguration über den Installateurzugang. Der genaue Funktionsumfang "
+            "dieser Portal-Einstellung ist von AlphaESS nicht vollständig dokumentiert."
+        )
+    }
     _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: AlphaESSWallboxCoordinator, entry: ConfigEntry) -> None:
