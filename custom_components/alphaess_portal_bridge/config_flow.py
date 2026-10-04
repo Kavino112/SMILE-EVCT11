@@ -30,6 +30,7 @@ from .const import (
     DEFAULT_UPDATE_INTERVAL_SECONDS,
     DOMAIN,
     UPDATE_INTERVAL_OPTIONS,
+    UPDATE_INTERVAL_STEP_SECONDS,
 )
 
 
@@ -147,7 +148,7 @@ class AlphaESSPortalBridgeOptionsFlow(config_entries.OptionsFlowWithReload):
                         NumberSelectorConfig(
                             min=min(UPDATE_INTERVAL_OPTIONS),
                             max=max(UPDATE_INTERVAL_OPTIONS),
-                            step=30,
+                            step=UPDATE_INTERVAL_STEP_SECONDS,
                             unit_of_measurement="s",
                             mode=NumberSelectorMode.BOX,
                         )
