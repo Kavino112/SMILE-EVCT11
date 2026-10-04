@@ -83,11 +83,12 @@ Kurze Übergangszustände der Wallbox können zwischen zwei Abfragen liegen und 
 ## Manuelle Installation
 
 1. Den bestehenden Ordner `config/custom_components/alphaess_portal_bridge` sichern.
-2. Die Integrationsdateien aus dem Repository-Root – einschließlich `manifest.json`, `brand/` und `translations/` – nach `config/custom_components/alphaess_portal_bridge/` kopieren und vorhandene Dateien ersetzen.
+2. Den Ordner `custom_components/alphaess_portal_bridge` aus diesem Repository nach `config/custom_components/` kopieren und vorhandene Dateien ersetzen.
 3. Home Assistant vollständig neu starten.
 4. Eine bereits eingerichtete Integration nicht löschen. Zugangsdaten und Wallbox-Seriennummer bleiben im vorhandenen Config Entry erhalten.
 
 Bei einer Neuinstallation die Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen** einrichten.
+
 ## G2T-Portal-Zuordnungen
 
 | Portal-Feld | Bedeutung |
