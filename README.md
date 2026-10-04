@@ -1,6 +1,6 @@
 # AlphaESS Wallbox Bridge
 
-> **Beta 0.5.6**  
+> **Beta 0.5.7**  
 > Entwickelt u.a. für die Community von **https://www.storion4you.de/**  
 > G2T-Erweiterung für **AlphaESS SMILE-G3-EVCT11/S**: **Kavino**  
 > Basierend auf diesem Ausgangsprojekt 
@@ -67,7 +67,7 @@ Bei unerwartetem Verhalten zuerst die AlphaESS-App oder das Portal prüfen. Die 
 
 ## Polling
 
-- Wallbox- und Konfigurationsdaten: **30 / 60 / 120 / 300 Sekunden**
+- Wallbox- und Konfigurationsdaten: Eingabefeld **30–300 Sekunden** in **30-Sekunden-Schritten**
 - Standard: **G1T 120 Sekunden**, **G2T 30 Sekunden**
 - Energiebericht: gecacht und höchstens etwa alle **5 Minuten** neu abgefragt
 
