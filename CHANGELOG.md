@@ -1,13 +1,18 @@
+## 0.5.4
+
+- Zeigt beim Portal-Profil-Sensor das passende G1T- oder G2T-Bild.
+- Ergänzt englische Übersetzungen für Einrichtungs- und Optionsdialoge sowie den Profil-Sensor.
+
+## 0.5.3
+
+- Setzt das Standardintervall abhängig vom Portal-Profil: G1T 120 Sekunden, G2T 30 Sekunden.
+- Zeigt das gespeicherte Intervall im Optionsdialog mit einer Radio-Auswahl zuverlässig an.
+
 # Changelog
 
 ## 0.5.2 – Community Build
 
-- Aktualisierungsintervall über die Optionen der Integration einstellbar: 30 Sekunden, 1, 2 oder 5 Minuten.
-- Bestehende Integrationen verwenden ohne gespeicherte Option weiterhin den sicheren Standard von 2 Minuten.
-
-### Funktionsumfang
-
-- Entwicklungsstand 0.5.2
+- Entwicklungsstand 0.5.2 als öffentliche Beta paketiert.
 - START/STOP bei G2T auf Ladeeinstellung **Manuell** begrenzt – UI und API-Schutz.
 - `WaitingForChargingPile` als **„Warten auf Antwort des E-Autos“** übersetzt.
 - Smart-Mode-Schutz für Zeitsteuerung, OBC-Phasenwahl und Lademodus ergänzt.
@@ -18,7 +23,7 @@
 - Installateursteuerung und Kabel-Selbstverriegelung schreibbar.
 - öffentliche Beta-Dokumentation und bekannte Einschränkungen ergänzt.
 
-## Entwicklungsstände
+## Entwicklungsstände vor der öffentlichen Beta
 
 ### 0.5.11
 - Installateursteuerung und Kabel-Selbstverriegelung als schreibbare Schalter ergänzt und praktisch bestätigt.

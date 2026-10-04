@@ -1,13 +1,13 @@
 # AlphaESS Wallbox Bridge – Storion4you Community Build
 
-> **Öffentliche Beta 0.5.2**  
-> Gebaut für die Community von **https://www.storion4you.de/**  
+> **Beta 0.5.4**  
+> Entwickelt für die Community von **https://www.storion4you.de/**  
 > G2T-Erweiterung für **AlphaESS SMILE-G3-EVCT11/S**: **Kavino**  
-> Basierend auf dem Ausgangsprojekt `wfa001/SMILE-EVCT11`.
+> Basierend auf dem Ausgangsprojekt **wfa001/SMILE-EVCT11**.
 
-Diese Home-Assistant-Custom-Integration bindet AlphaESS-Wallboxen über das AlphaESS-Kundenportal an Home Assistant an. Der Community-Build erweitert die bestehende G1T-Unterstützung um die neuere G2T-Konfiguration der SMILE-G3-EVCT11/S.
+Diese Home-Assistant-Custom-Integration bindet AlphaESS-Wallboxen über das AlphaESS-Kundenportal an Home Assistant an. Der Community-Build erhält die bestehende G1T-Unterstützung und ergänzt die neuere G2T-Konfiguration der SMILE-G3-EVCT11/S.
 
-**Beta-Hinweis:** Dies ist keine offizielle AlphaESS-Integration. Die G2T-Funktionen wurden umfangreich praktisch getestet, einige Sonderfälle sind aber noch offen. Vor dem Update den bestehenden Integrationsordner sichern.
+Dies ist ein Community-Projekt und keine offizielle AlphaESS-Integration. Die G2T-Funktionen wurden praktisch getestet; einzelne Sonderfälle und die G1T-Hardwarekompatibilität benötigen weitere Rückmeldungen.
 
 ## Unterstützter Stand
 
@@ -15,7 +15,7 @@ Diese Home-Assistant-Custom-Integration bindet AlphaESS-Wallboxen über das Alph
 
 - automatische Erkennung des Portal-Profils `g2T`
 - Live-Status und Ladeleistung
-- Fahrzeug angeschlossen / Ladestecker verriegelt als Ja/Nein
+- Fahrzeug angeschlossen und Ladestecker verriegelt als Ja/Nein
 - Ladeeinstellung: **Manuell / Zeitgesteuertes Aufladen / Plug and Play**
 - Lademodus: **Langsamladung / Schonladung / Schnellladung / Kundenspezifische Ladeleistung**
 - kundenspezifischer Ladestrom **6–16 A**
@@ -24,60 +24,65 @@ Diese Home-Assistant-Custom-Integration bindet AlphaESS-Wallboxen über das Alph
 - drei Zeitrahmen mit Aktivierung, Start, Ende, Lademodus und Maximalstrom
 - Zeitwerte im vom Portal verwendeten **15-Minuten-Raster**
 - Hausstrom-Einstellung **25–1000 A**
-- Installateursteuerung erlaubt
-- Kabel-Selbstverriegelung aktiviert
-- Hardware-/Software-/Modell-/Profil-Diagnose
+- Installateursteuerung und Kabel-Selbstverriegelung
+- Hardware-, Software-, Modell- und Profildiagnose
 - Energie- und Ladeberichtswerte
+
+Der Diagnose-Sensor **Portal-Profil** zeigt das erkannte Profil und das dazugehörige Bild `G1T.png` oder `G2T.png`.
 
 ### G1T
 
-Die bestehende G1T-Erkennung und -Konfiguration des Ausgangsprojekts bleibt erhalten. Die neuen G2T-spezifischen Schutzregeln greifen nicht in den G1T-Pfad ein. Für diese Beta wurde jedoch **kein eigener G1T-Hardware-Regressionslauf** durchgeführt; Rückmeldungen von G1T-Testern sind ausdrücklich willkommen.
+Die bestehende G1T-Erkennung und -Konfiguration des Ausgangsprojekts bleibt erhalten. Die G2T-spezifischen Schutzregeln greifen nicht in den G1T-Pfad ein. Für diese Beta wurde kein eigener G1T-Hardware-Regressionslauf durchgeführt.
 
-## Wichtige G2T-Schutzlogik
+## G2T-Schutzlogik
 
-### Laden starten / stoppen
+### Laden starten und stoppen
 
-Bei G2T sind **Laden starten** und **Laden stoppen ausschließlich bei Ladeeinstellung „Manuell“ verfügbar**. Das wurde mit angeschlossenem Fahrzeug unter Last bestätigt.
+**Laden starten** und **Laden stoppen** sind bei G2T ausschließlich mit der Ladeeinstellung **Manuell** verfügbar. Das wurde mit angeschlossenem Fahrzeug unter Last bestätigt. Bei **Zeitgesteuertem Aufladen** und **Plug and Play** deaktiviert die Integration die Schaltflächen und blockiert direkte Start-/Stopp-Aufrufe zusätzlich in der API-Schicht.
 
-Bei **Zeitgesteuertem Aufladen** und **Plug and Play** werden die Buttons deaktiviert. Zusätzlich blockiert die API-Schicht einen direkten Start-/Stop-Aufruf außerhalb des manuellen Modus. Damit wird verhindert, dass Home Assistant einen Befehl scheinbar erfolgreich ausführt, obwohl die aktive AlphaESS-Strategie ihn ignoriert.
+Die Beta sendet absichtlich **keinen automatischen zweiten STOP-Befehl**. In einem Test musste STOP einmal erneut gesendet werden; die Ursache ist noch nicht reproduzierbar geklärt.
 
 ### Smart Mode
 
-Smart Mode wird nur bei G2T angeboten. Beim Aktivieren prüft die Integration:
+Smart Mode wird nur für G2T angeboten. Beim Aktivieren prüft die Integration:
 
 - Zeitgesteuertes Aufladen darf nicht aktiv sein.
-- OBC-Phasenwahl muss auf **3-phasig** stehen.
-- Lademodus muss **Langsamladung, Schonladung oder Schnellladung** sein.
+- Die OBC-Phasenwahl muss auf **3-phasig** stehen.
+- Der Lademodus muss **Langsamladung, Schonladung oder Schnellladung** sein.
 
-Ein Wechsel auf Zeitgesteuertes Aufladen bei aktivem Smart Mode wird ebenfalls blockiert. Ebenso muss Smart Mode vor einem manuellen Wechsel auf 1- oder 2-phasig deaktiviert werden.
+Ein Wechsel auf Zeitgesteuertes Aufladen bei aktivem Smart Mode wird blockiert. Vor einem manuellen Wechsel auf 1- oder 2-phasig muss Smart Mode deaktiviert werden.
 
-## Bekannte Beta-Einschränkungen
+## Bekannte Einschränkungen und offene Prüfungen
 
-1. **Smart-Mode-Phasenautomatik:** Smart Mode selbst wurde erfolgreich aktiviert. Die automatische 1↔3-Phasenumschaltung bei geeignetem PV-Überschuss ist noch nicht abschließend live bestätigt.
-2. **OBC „2-phasig“:** Der Wert wird von AlphaESS-App und Portal gespeichert. In einem Live-Test mit einem Peugeot e-208 wurde trotz Auswahl „2-phasig“ extern auf allen drei Phasen Leistung gemessen. Die Entität ist deshalb eine **OBC-Sollwahl**, keine Messung der tatsächlich aktiven Phasen.
-3. **STOP-Zuverlässigkeit:** Start und Stop funktionieren im manuellen Modus. In einem Test musste STOP einmal ein zweites Mal gesendet werden. Die Beta wiederholt STOP absichtlich **nicht automatisch**, solange die Ursache nicht reproduzierbar geklärt ist.
-4. **`chargingAmount`:** Wird entsprechend der AlphaESS-App als **„In dieser Sitzung geladen“** angezeigt. Der Wert blieb im Test nach erneutem Anstecken erhalten; die genaue AlphaESS-Definition bzw. der Reset-Zeitpunkt ist noch offen.
-5. **`lastChargingAmount`:** Wird als **„Letzter Ladeabschnitt“** angezeigt. Der Wert kann zeitweise `null` sein und erhält bewusst keinen künstlichen Fallback.
-6. **„Heute laut Ladebericht“:** Separate Summe abgeschlossener Berichtseinträge des aktuellen Tages. In einem Test war der Wert trotz Live-Ladung noch 0,00 kWh; daher vorerst nur als experimentellen Berichtswert betrachten.
+1. **Smart-Mode-Phasenautomatik:** Smart Mode wurde erfolgreich aktiviert. Die automatische 1↔3-Phasenumschaltung bei geeignetem PV-Überschuss ist noch nicht abschließend live bestätigt.
+2. **OBC „2-phasig“:** AlphaESS-App und Portal speichern den Wert. Bei einem Test mit einem Peugeot e-208 wurde trotz der Auswahl „2-phasig“ extern auf allen drei Phasen Leistung gemessen. Die Entität zeigt deshalb eine **Sollwahl**, nicht die tatsächlich stromführenden Phasen.
+3. **`chargingAmount`:** Wird wie in der AlphaESS-App als **„In dieser Sitzung geladen“** angezeigt. Der Wert blieb im Test nach erneutem Anstecken erhalten; seine genaue Definition und sein Reset-Zeitpunkt sind offen.
+4. **`lastChargingAmount`:** Wird als **„Letzter Ladeabschnitt“** angezeigt. Der Wert kann zeitweise `null` sein und erhält keinen künstlichen Fallback.
+5. **„Heute laut Ladebericht“:** Summe abgeschlossener Berichtseinträge des aktuellen Tages. Der Wert war in einem Test während einer Live-Ladung noch 0,00 kWh und ist daher vorerst als experimentell zu betrachten.
 
-## Installation / Update
+Besonders erwünscht sind Tests mit weiteren G2T-Fahrzeugmodellen und Firmwareständen, eine G1T-Regressionsprüfung, die Smart-Mode-Phasenautomatik, zweiphasig ladenden Fahrzeugen sowie das Resetverhalten von `chargingAmount` und die Plausibilität des Tagesberichts.
 
-1. Vorhandenen Ordner `config/custom_components/alphaess_portal_bridge` sichern.
-2. Aus dem ZIP den Ordner `custom_components/alphaess_portal_bridge` nach `config/custom_components/` kopieren und die vorhandenen Dateien ersetzen.
-3. Home Assistant vollständig neu starten.
-4. Eine bereits eingerichtete Integration **nicht löschen**. Zugangsdaten und Wallbox-Seriennummer bleiben im vorhandenen Config Entry erhalten.
-5. Auf der Geräteseite unter Diagnose prüfen, welches **Portal-Profil** (`g1T` oder `g2T`) erkannt wurde.
-
-Bei einer Neuinstallation wird die Integration wie gewohnt über **Einstellungen → Geräte & Dienste → Integration hinzufügen** eingerichtet.
+Bei unerwartetem Verhalten zuerst die AlphaESS-App oder das Portal prüfen. Die Wallbox nicht durch schnelle wiederholte Schreibbefehle belasten.
 
 ## Polling
 
-- Wallbox-/Konfigurationsdaten: ca. alle **30 Sekunden**
+- Wallbox- und Konfigurationsdaten: **30 / 60 / 120 / 300 Sekunden**
+- Standard: **G1T 120 Sekunden**, **G2T 30 Sekunden**
 - Energiebericht: gecacht und höchstens etwa alle **5 Minuten** neu abgefragt
 
-Kurze Übergangszustände der Wallbox können deshalb zwischen zwei Abfragen liegen und in Home Assistant nicht sichtbar werden.
+Kurze Übergangszustände der Wallbox können zwischen zwei Abfragen liegen und in Home Assistant unsichtbar bleiben.
 
-## G2T-Zuordnungen
+## Installation und Update
+
+1. Den bestehenden Ordner `config/custom_components/alphaess_portal_bridge` sichern.
+2. Den Ordner `custom_components/alphaess_portal_bridge` aus dem Paket nach `config/custom_components/` kopieren und die vorhandenen Dateien ersetzen.
+3. Home Assistant vollständig neu starten.
+4. Eine bereits eingerichtete Integration nicht löschen. Zugangsdaten und Wallbox-Seriennummer bleiben im vorhandenen Config Entry erhalten.
+5. Auf der Geräteseite unter Diagnose prüfen, welches Portal-Profil (`g1T` oder `g2T`) erkannt wurde.
+
+Bei einer Neuinstallation die Integration über **Einstellungen → Geräte & Dienste → Integration hinzufügen** einrichten.
+
+## G2T-Portal-Zuordnungen
 
 | Portal-Feld | Bedeutung |
 |---|---|
@@ -91,18 +96,26 @@ Kurze Übergangszustände der Wallbox können deshalb zwischen zwei Abfragen lie
 | `allowInstallersControl` | Installateursteuerung erlaubt |
 | `gunLineSelfLockEnable` | Kabel-Selbstverriegelung |
 
+## Projekt-Herkunft und Attribution
+
+Diese Ausgabe der **AlphaESS Wallbox Bridge** wurde für die Community von **https://www.storion4you.de/** erstellt und erweitert.
+
+Die Unterstützung der **AlphaESS SMILE-G3-EVCT11/S (G2T)** wurde durch **Kavino** aus der Storion4you-Community initiiert, anhand realer Portal- und Wallbox-Daten ermittelt und praktisch getestet. Dazu gehören insbesondere die G2T-Zuordnungen und die Home-Assistant-Unterstützung für Ladestrategie, Lademodus, Ladestrom, OBC-Phasenwahl, Smart Mode, Zeitfenster, Live-Status und Energiebericht.
+
+Die Erweiterung basiert auf **wfa001/SMILE-EVCT11**. Die Kennzeichnung als Storion4you-/Kavino-Erweiterung macht die Herkunft der G2T-Erweiterung sichtbar und ersetzt oder beansprucht nicht die Urheberschaft des Ausgangsprojekts.
+
 ## Beta-Feedback
 
-Für einen Fehlerbericht sind besonders hilfreich:
+Für einen Fehlerbericht helfen besonders:
 
 - Home-Assistant-Version
-- Wallbox-Modell sowie Hardware-/Software-Version
+- Wallbox-Modell sowie Hardware- und Software-Version
 - erkanntes Portal-Profil `g1T` oder `g2T`
-- Fahrzeugmodell, falls das Verhalten während einer Ladung auftritt
-- genaue Ausgangseinstellung und ausgeführte Aktion
-- beobachteter Status / Leistung vor und nach der Aktion
+- Fahrzeugmodell, wenn der Fehler während einer Ladung auftritt
+- Ausgangseinstellung und ausgeführte Aktion
+- Status und Leistung vor und nach der Aktion
 - relevante Home-Assistant-Logs
 
-Bitte Zugangsdaten, Tokens und persönliche Daten aus Logs entfernen. Seriennummern können für öffentliche Beiträge ebenfalls geschwärzt werden.
+Zugangsdaten, Tokens und persönliche Daten aus Logs entfernen. Seriennummern für öffentliche Beiträge ebenfalls schwärzen.
 
-Siehe außerdem `BETA_NOTES.md`, `CHANGELOG.md` und `NOTICE.md`.
+Änderungen früherer Entwicklungsstände stehen im `CHANGELOG.md`.

@@ -1,0 +1,11 @@
+{
+  "domain": "alphaess_portal_bridge",
+  "name": "AlphaESS Wallbox Bridge",
+  "config_flow": true,
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "version": "0.5.4",
+  "loggers": [
+    "custom_components.alphaess_portal_bridge"
+  ]
+}

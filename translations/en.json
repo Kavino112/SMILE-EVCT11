@@ -1,0 +1,51 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to AlphaESS Portal",
+        "description": "Sign in with your current AlphaESS customer portal account. The wallbox serial number is optional and can be added later through Reconfigure if it is not detected automatically.",
+        "data": {
+          "username": "Username or email address",
+          "password": "Password",
+          "system_serial": "System serial number",
+          "wallbox_serial": "Wallbox serial number (optional)"
+        }
+      },
+      "reconfigure": {
+        "title": "Assign wallbox",
+        "description": "Enter the wallbox serial number. It starts with ALP.",
+        "data": {
+          "wallbox_serial": "Wallbox serial number"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The login was rejected.",
+      "session_rejected": "The login succeeded, but the portal has not released the new session yet.",
+      "system_access_denied": "The login succeeded, but the portal is still denying access to this system.",
+      "cannot_connect": "The AlphaESS portal is currently unavailable.",
+      "portal_status": "The AlphaESS portal returned status {status} during {step}."
+    },
+    "abort": {
+      "reconfigure_successful": "The wallbox was assigned."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Update interval",
+        "description": "Choose how often wallbox data is requested from the AlphaESS portal. Defaults: G1T 120 seconds, G2T 30 seconds.",
+        "data": {
+          "update_interval_seconds": "Refresh every (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "portal_profile": {
+        "name": "Portal profile"
+      }
+    }
+  }
+}
