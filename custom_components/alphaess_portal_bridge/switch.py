@@ -71,7 +71,7 @@ class AlphaESSInstallerControlSwitch(AlphaESSWallboxEntity, SwitchEntity):
 class AlphaESSGunLineSelfLockSwitch(AlphaESSWallboxEntity, SwitchEntity):
     """Configure the G2T cable self-lock feature exposed by the AlphaESS app."""
 
-    _attr_name = "Kabel-Selbstverriegelung aktiviert"
+    _attr_name = "Ladekabel an Wallbox automatisch verriegeln"
     _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: AlphaESSWallboxCoordinator, entry: ConfigEntry) -> None:
