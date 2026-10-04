@@ -1,6 +1,11 @@
 {
   "domain": "alphaess_portal_bridge",
   "name": "AlphaESS Wallbox Bridge",
+  "documentation": "https://github.com/wfa001/SMILE-EVCT11",
+  "issue_tracker": "https://github.com/wfa001/SMILE-EVCT11/issues",
+  "codeowners": [
+    "@wfa001"
+  ],
   "config_flow": true,
   "integration_type": "hub",
   "iot_class": "cloud_polling",

@@ -3,7 +3,7 @@
 # Community-Build fuer https://www.storion4you.de/
 # G2T-Erweiterung fuer SMILE-G3-EVCT11/S: Kavino
 # Basierend auf dem Ausgangsprojekt wfa001/SMILE-EVCT11.
-# Details und Attribution: siehe NOTICE.md im Paket.
+# Details und Attribution: siehe README.md im Paket.
 # ---------------------------------------------------------------------------
 from __future__ import annotations
 
@@ -61,12 +61,12 @@ async def async_setup(hass: HomeAssistant, config: dict[str, object]) -> bool:
         [
             StaticPathConfig(
                 f"/api/{DOMAIN}/profiles/g1t.png",
-                str(image_dir / "G1T.png"),
+                str(image_dir / "g1t.png"),
                 cache_headers=True,
             ),
             StaticPathConfig(
                 f"/api/{DOMAIN}/profiles/g2t.png",
-                str(image_dir / "G2T.png"),
+                str(image_dir / "g2t.png"),
                 cache_headers=True,
             ),
         ]
