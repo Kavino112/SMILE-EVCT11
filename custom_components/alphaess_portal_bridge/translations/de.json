@@ -34,7 +34,7 @@
     "step": {
       "init": {
         "title": "Aktualisierungsintervall",
-        "description": "Wähle, wie häufig die Wallbox-Daten im AlphaESS-Portal abgefragt werden. Eingabe von 30 bis 300 Sekunden in 30-Sekunden-Schritten. Standard: G1T 120 Sekunden, G2T 30 Sekunden.",
+        "description": "Nur Vielfache von 30 Sekunden zwischen 30 und 300 Sekunden sind erlaubt. Standard: G1T 120 Sekunden, G2T 30 Sekunden.",
         "data": {
           "update_interval_seconds": "Aktualisierung alle (Sekunden)"
         }
