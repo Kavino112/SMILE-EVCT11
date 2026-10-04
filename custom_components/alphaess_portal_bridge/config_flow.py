@@ -149,7 +149,7 @@ class AlphaESSPortalBridgeOptionsFlow(config_entries.OptionsFlowWithReload):
                                 {"value": interval, "label": f"{interval} s"}
                                 for interval in UPDATE_INTERVAL_OPTIONS
                             ],
-                            mode=SelectSelectorMode.RADIO,
+                            mode=SelectSelectorMode.LIST,
                         )
                     ),
                 }
