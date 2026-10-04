@@ -1,3 +1,7 @@
+## 0.5.6
+
+- Behebt einen Fehler im Optionsfluss: Das ungültige Auswahlmodus-Enum `RADIO` wird durch `LIST` ersetzt.
+
 ## 0.5.5
 
 - Stellt die Integration in die Standardstruktur `custom_components/alphaess_portal_bridge/` um.
