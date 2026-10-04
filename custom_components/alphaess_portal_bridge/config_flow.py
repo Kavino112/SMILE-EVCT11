@@ -14,9 +14,9 @@ from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
-    SelectSelector,
-    SelectSelectorConfig,
-    SelectSelectorMode,
+    NumberSelector,
+    NumberSelectorConfig,
+    NumberSelectorMode,
 )
 
 from .api import AlphaESSPortalApi, AuthenticationError, PortalConnectionError
@@ -143,13 +143,13 @@ class AlphaESSPortalBridgeOptionsFlow(config_entries.OptionsFlowWithReload):
                     vol.Required(
                         CONF_UPDATE_INTERVAL,
                         default=current_interval,
-                    ): SelectSelector(
-                        SelectSelectorConfig(
-                            options=[
-                                {"value": interval, "label": f"{interval} s"}
-                                for interval in UPDATE_INTERVAL_OPTIONS
-                            ],
-                            mode=SelectSelectorMode.LIST,
+                    ): NumberSelector(
+                        NumberSelectorConfig(
+                            min=min(UPDATE_INTERVAL_OPTIONS),
+                            max=max(UPDATE_INTERVAL_OPTIONS),
+                            step=30,
+                            unit_of_measurement="s",
+                            mode=NumberSelectorMode.BOX,
                         )
                     ),
                 }
