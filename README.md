@@ -1,17 +1,18 @@
-# AlphaESS Wallbox Bridge – Storion4you Community Build
+# AlphaESS Wallbox Bridge
 
 > **Beta 0.5.4**  
-> Entwickelt für die Community von **https://www.storion4you.de/**  
+> Entwickelt u.a. für die Community von **https://www.storion4you.de/**  
 > G2T-Erweiterung für **AlphaESS SMILE-G3-EVCT11/S**: **Kavino**  
-> Basierend auf dem Ausgangsprojekt **wfa001/SMILE-EVCT11**.
+> Basierend auf diesem Ausgangsprojekt 
 
-Diese Home-Assistant-Custom-Integration bindet AlphaESS-Wallboxen über das AlphaESS-Kundenportal an Home Assistant an. Der Community-Build erhält die bestehende G1T-Unterstützung und ergänzt die neuere G2T-Konfiguration der SMILE-G3-EVCT11/S.
+Diese Home-Assistant-Custom-Integration bindet AlphaESS-Wallboxen über das AlphaESS-Kundenportal an Home Assistant an. 
+Erhält die bestehende G1T-Unterstützung und ergänzt die neuere G2T-Konfiguration der SMILE-G3-EVCT11/S (Kavino).
 
 Dies ist ein Community-Projekt und keine offizielle AlphaESS-Integration. Die G2T-Funktionen wurden praktisch getestet; einzelne Sonderfälle und die G1T-Hardwarekompatibilität benötigen weitere Rückmeldungen.
 
 ## Unterstützter Stand
 
-### G2T – praktisch bestätigt
+### G2T
 
 - automatische Erkennung des Portal-Profils `g2T`
 - Live-Status und Ladeleistung
