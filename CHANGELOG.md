@@ -1,3 +1,5 @@
+# Changelog
+
 ## 0.5.7
 
 - Ersetzt die Auswahl des Abfrageintervalls durch ein Zahlenfeld (30–300 Sekunden in 30-Sekunden-Schritten); die G1T-/G2T-Standardwerte bleiben 120 beziehungsweise 30 Sekunden.
@@ -22,9 +24,7 @@
 - Setzt das Standardintervall abhängig vom Portal-Profil: G1T 120 Sekunden, G2T 30 Sekunden.
 - Zeigt das gespeicherte Intervall im Optionsdialog mit einer Radio-Auswahl zuverlässig an.
 
-# Changelog
-
-## 0.5.2 – Community Build
+## 0.5.2
 
 - Entwicklungsstand 0.5.2 als öffentliche Beta paketiert.
 - START/STOP bei G2T auf Ladeeinstellung **Manuell** begrenzt – UI und API-Schutz.
@@ -37,13 +37,8 @@
 - Installateursteuerung und Kabel-Selbstverriegelung schreibbar.
 - öffentliche Beta-Dokumentation und bekannte Einschränkungen ergänzt.
 
-## Entwicklungsstände vor der öffentlichen Beta
-
 ### 0.5.11
 - Installateursteuerung und Kabel-Selbstverriegelung als schreibbare Schalter ergänzt und praktisch bestätigt.
-
-### 0.5.10
-- Storion4you-/Kavino-Kennzeichnung und `NOTICE.md` ergänzt.
 
 ### 0.5.9
 - G2T-Schutz- und Validierungsfehler vereinheitlicht und auf Deutsch ausgegeben.
